@@ -21,9 +21,9 @@ categories:
   - title: "Analysis"
     children:
       - title: "MySQL"
-        url: /categories/MySQL/
+        url: /categories/categories1/
         
   - title: "wonness"
     children:
       - title: "book"
-        url: /categories/book/
+        url: /categories/categories2/
