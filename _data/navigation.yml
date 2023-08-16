@@ -20,5 +20,7 @@ main:
 categories:
   - title: "SQL"
     url: /categories/SQL/
+  - title: "Tableau"
+    url: /categories/Tableau/
   - title: "Book"
     url: /categories/Book/
