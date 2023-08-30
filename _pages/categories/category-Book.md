@@ -1,9 +1,9 @@
 ---
-title: "Book"
+title: "Review"
 layout: category
-permalink: /categories/Book/
+permalink: /categories/Review/
 author_profile: true
-taxonomy: Book
+taxonomy: Review
 sidebar:
   nav: "categories"
 ---
