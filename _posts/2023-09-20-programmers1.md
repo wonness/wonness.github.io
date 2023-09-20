@@ -38,10 +38,10 @@ Programmers의 SQL 난이도 1,2,3 문제를 풀어보았습니다.\
 ```sql
 /* 1st 시도
 between으로 날짜 범위 구하기 성공
-but, date함수 사용 불가능 */
+but, 버전 이슈로 DATE() 사용 불가능 */
 SELECT A.TITLE, A.BOARD_ID,
         B.REPLY_ID, B.WRITER_ID, B.CONTENTS, 
-        DATE(B.CREATED_DATE) # MySQL 4.1.1 버전부터 사용 가능
+        DATE(B.CREATED_DATE)
 FROM USED_GOODS_BOARD A RIGHT JOIN USED_GOODS_REPLY B
 ON A.BOARD_ID = B.BOARD_ID
 WHERE A.CREATED_DATE BETWEEN "2022-10-01" AND "2022-10-31"
@@ -57,8 +57,8 @@ SELECT A.TITLE, A.BOARD_ID,
 FROM USED_GOODS_BOARD AS A JOIN USED_GOODS_REPLY AS B
 ON A.BOARD_ID = B.BOARD_ID
 WHERE A.CREATED_DATE LIKE "2022-10%"
-# WHERE A.CREATED_DATE BETWEEN "2022-10-01" AND "2022-10-31"
-# WHERE DATE_FORMAT(A.CREATED_DATE, "%Y-%m") = "2022-10"
+-- WHERE A.CREATED_DATE BETWEEN "2022-10-01" AND "2022-10-31"
+-- WHERE DATE_FORMAT(A.CREATED_DATE, "%Y-%m") = "2022-10"
 ORDER BY B.CREATED_DATE, TITLE
 ```
 
@@ -83,7 +83,7 @@ ORDER BY B.CREATED_DATE, TITLE
 <br>
 
 ## 🏁 자동차 대여 기록에서 대여중/ 대여 가능 여부 구분하기
-`CAR_RENTAL_COMPANY_RENTAL_HISTORY` 테이블에서 2022년 10월 16일에 대여 중인 자동차인 경우 '대여중' 이라고 표시하고, 대여 중이지 않은 자동차인 경우 '대여 가능'을 표시하는 컬럼(컬럼명: AVAILABILITY)을 추가하여 자동차 ID와 AVAILABILITY 리스트를 출력하시오.
+`CAR_RENTAL_COMPANY_RENTAL_HISTORY` 테이블에서 2022년 10월 16일에 대여 중인 자동차인 경우 '대여중' 이라고 표시하고, 대여 중이지 않은 자동차인 경우 '대여 가능'을 표시하는 컬럼(컬럼명: AVAILABILITY)을 추가하여 자동차 ID와 AVAILABILITY 리스트를 출력하시오.\
 (자동차 ID 기준 내림차순 정렬)\
 <span style="background-color:#f5f0ff">\#CASE WHEN #Sub-Query</span>
 
@@ -104,11 +104,12 @@ ORDER BY CAR_ID DESC
 1. `GROUP BY` : 데이터를 CAR_ID별로 그룹화한다.
 2. `CASE WHEN` : 대여 시작 날짜와 반납 날짜 사이에 2022-10-16 날짜가 속해있는 경우 "대여중"을 표시, 그렇지 않은 경우 "대여 가능"을 표시하게 하고, 그 결과를 컬럼으로 정의한다.
 
-- **새로 배운 것**
-GROUP BY를 하면 하나의 CAR_ID에 속하는 데이터 하나만을 가지고 집계할 수 있다.\
-예를 들어, CAR_ID = 3의 대여 기록이 여러 건 있다고 할 때, 첫번째 튜플만 집계에 고려한다.\
+<br>
+
+- **새로 배운 것**\
+GROUP BY를 하면 하나의 CAR_ID에 속하는 데이터 하나만을 가지고 집계할 수 있다. 예를 들어, CAR_ID = 3의 대여 기록이 여러 건 있다고 할 때, 첫번째 튜플만 집계에 고려한다.\
 <span style="text-decoration: underline;">즉, 여러 건의 대여 기록에 "2022-10-16"이 속해있어도, 첫번째 튜플이 아니면 "대여 가능"을 출력한다.</span>\
-→ 이 문제의 경우, SELECT 절에서 서브쿼리를 이용해 모든 데이터를 검색해서 집계할 수 있도록 한다.
+→ 이 문제의 경우, SELECT 절에서 서브쿼리를 이용해 모든 데이터를 검색해서 집계할 수 있도록 했다.
 
 <br>
 
@@ -119,7 +120,8 @@ GROUP BY를 하면 하나의 CAR_ID에 속하는 데이터 하나만을 가지�
 |ANIMAL_INS|동물 보호소에 들어온 동물의 정보|
 |ANIMAL_OUTS|동물 보호소에서 입양 보낸 동물의 정보|
 
-입양을 간 동물 중, 보호 기간이 가장 길었던 동물 두 마리의 아이디와 이름을 조회하시오. (보호 기간 기준 내림차순 정렬)\
+입양을 간 동물 중, 보호 기간이 가장 길었던 동물 두 마리의 아이디와 이름을 조회하시오.\
+(보호 기간 기준 내림차순 정렬)\
 <span style="background-color:#f5f0ff">\#LEFT JOIN #DATE</span>
 
 <br>
@@ -134,8 +136,9 @@ ORDER BY DATEDIFF(B.DATETIME, A.DATETIME) DESC
 LIMIT 2
 ```
 
-1. `FROM` : 보호소에 들어왔지만 아직 입양가지 못한 동물이 있을 것이라 생각해서 LEFT JOIN 했다. ("입양을 간 동물 중"이라고 범위를 한정지었으니, INNER JOIN하는게 더 효율적일 듯 하다.)
-2. `WHERE` : 입양 보낸 동물과 보호소에 들어온 동물의 ID가 같은 데이터를 필터링한다.
-3. `ORDER BY` : DATEDIFF()를 이용하여 보호 시작일과 입양일의 차이를 구하고, 보호기간을 내림차순으로 정렬한다.
+1. `FROM` : 보호소에 들어왔지만 아직 입양가지 못한 동물이 있을 것이라 생각해서 LEFT JOIN 했다.\
+  ("입양을 간 동물 중"이라고 범위를 한정지었으니, INNER JOIN하는게 더 효율적일 듯 하다.)
+3. `WHERE` : 입양 보낸 동물과 보호소에 들어온 동물의 ID가 같은 데이터를 필터링한다.
+4. `ORDER BY` : DATEDIFF()를 이용하여 보호 시작일과 입양일의 차이를 구하고, 보호기간을 내림차순으로 정렬한다.
 
 <br>
