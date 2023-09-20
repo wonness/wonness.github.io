@@ -85,6 +85,8 @@ ORDER BY B.CREATED_DATE, TITLE
 (자동차 ID 기준 내림차순 정렬)\
 <span style="background-color:#f5f0ff">\#CASE WHEN #Sub-Query</span>
 
+<br>
+
 - **문제 풀이**
 ```sql
 SELECT CAR_ID,
@@ -117,6 +119,7 @@ GROUP BY를 하면 하나의 CAR_ID에 속하는 데이터 하나만을 가지�
 
 입양을 간 동물 중, 보호 기간이 가장 길었던 동물 두 마리의 아이디와 이름을 조회하시오. (보호 기간 기준 내림차순 정렬)\
 <span style="background-color:#f5f0ff">\#LEFT JOIN #DATE</span>
+
 <br>
 
 - **문제 풀이**
