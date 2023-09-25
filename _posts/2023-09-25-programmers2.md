@@ -21,7 +21,8 @@ Programmers의 SQL 난이도 4,5 문제를 풀어보았습니다.\
 
 --------------------
 ## 🏁 우유와 요거트가 담긴 장바구니
-우유와 요거트를 동시에 구입한 장바구니의 아이디를 조회하시오. (장바구니 아이디 기준 오름차순 정렬)\
+우유와 요거트를 동시에 구입한 장바구니의 아이디를 조회하시오.\
+(장바구니 아이디 기준 오름차순 정렬)\
 <span style="background-color:#f5f0ff">\#SELF JOIN #WHERE #조합</span>
 
 <br>
@@ -53,8 +54,7 @@ WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 <br>
 
 - **새로 배운 것**
-  - SELF JOIN : 조합 생성에 유용\
-    SELF JOIN은 순서가 바뀐 데이터가 중복되어 출력된다는 것을 간과하지 않기 !
+  SELF JOIN은 순서가 바뀐 데이터가 중복되어 출력된다는 것을 간과하지 않기 !
 
 <br>
 
@@ -120,8 +120,7 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 <br>
 
 - **새로 배운 것**
-  - GROUP BY\
-    그룹화를 하고 그 그룹에 속하는 여러 데이터를 집계하고 출력하려면, 집계함수를 사용해야 한다 !
+  GROUP BY로 그룹화하고 그 그룹에 속하는 여러 데이터를 집계하고 출력하려면, 집계함수를 사용해야 한다 !
 
 <br>
 
@@ -134,7 +133,7 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 
 `MEMBER_PROFILE`와 `REST_REVIEW` 테이블에서 리뷰를 가장 많이 작성한 회원의 리뷰들을 조회하시오.\
 (리뷰 작성일 기준 오름차순 정렬, 리뷰 작성일이 같다면 리뷰 텍스트 기준 오름차순 정렬)\
-<span style="background-color:#f5f0ff">\# </span>
+<span style="background-color:#f5f0ff">\#WHERE #Sub-Query #ORDER BY </span>
 
 <br>
 
@@ -142,8 +141,8 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 
 ```sql
 /* 1st 시도
-리뷰를 가장 많이 남긴 회원을 찾으려 함
-결과 : WHERE절 서브쿼리에서 LIMIT을 못써서 인지, SELECT 절에 없는 집계함수가 ORDER BY절에 있어서 그런건지 모르겠지만 오류 발생 */
+LIMIT을 사용해서 리뷰를 가장 많이 남긴 회원을 찾으려 함
+결과 : ORDER BY절에서 지정한 집계함수가 SELECT 절에 없어서 오류 발생 */
 SELECT MEMBER_NAME, REVIEW_TEXT, 
     DATE_FORMAT(REVIEW_DATE,"%Y-%m-%d") AS REVIEW_DATE
 FROM MEMBER_PROFILE A JOIN REST_REVIEW B
@@ -159,7 +158,7 @@ ORDER BY REVIEW_DATE, REVIEW_TEXT
 
 ```sql
 /* 2nd 시도
-리뷰 수로 필터링 하기 위해, where절 서브쿼리의 having절에 또 서브쿼리를 추가 */
+리뷰 수로 필터링 하기 위해, WHERE절 서브쿼리의 HAVING절에 또 서브쿼리를 추가 */
 SELECT MEMBER_NAME, REVIEW_TEXT, 
     DATE_FORMAT(REVIEW_DATE,"%Y-%m-%d") AS REVIEW_DATE
 FROM MEMBER_PROFILE A JOIN REST_REVIEW B
@@ -178,14 +177,15 @@ WHERE A.MEMBER_ID IN (SELECT A.MEMBER_ID
 ORDER BY REVIEW_DATE, REVIEW_TEXT
 ```
 
-1. `FROM` :
-2. `WHERE` :
-3. `SELECT` :
+1. `FROM` : `MEMBER_PROFILE`과 `REST_REVIEW` 테이블을 INNER JOIN한다.
+2. `WHERE` : `MEMBER_PROFILE`과 `REST_REVIEW` 테이블을 INNER JOIN한 테이블에서 가장 높은 리뷰 수로 데이터를 필터링 한다. 그리고, 그 리뷰 수를 가진 회원을 조회하여 필터링한다. 
 
 <br>
 
 - **새로 배운 것**
-
+  ORDER BY에서 정렬 지정한 컬럼은 SELECT절에서도 지정해 주어야 한다.
+  
+<br>
 
 ## 🏁 입양 시각 구하기 (2)
 
@@ -193,4 +193,64 @@ ORDER BY REVIEW_DATE, REVIEW_TEXT
 
 ## 🏁 상품을 구매한 회원 비율 구하기
 
+|테이블|내용|
+|:---|:---|
+|USER_INFO|의류 쇼핑몰에 가입한 회원 정보|
+|ONLINE_INFO|온라인 상품 판매 정보|
 
+USER_INFO 테이블과 ONLINE_SALE 테이블에서 2021년에 가입한 전체 회원들 중 상품을 구매한 회원수와 상품을 구매한 회원의 비율(=2021년에 가입한 회원 중 상품을 구매한 회원수 / 2021년에 가입한 전체 회원 수)을 년, 월 별로 출력하시오.\
+(상품을 구매한 회원의 비율은 소수점 두번째자리에서 반올림, 년 기준 오름차순 정렬, 년이 같다면 월 기준오름차순 정렬)\
+<span style="background-color:#f5f0ff">\# </span>
+
+<br>
+
+- **문제 풀이**
+
+```sql
+/* 1st 시도
+비율 구할 때, 분모에 서브쿼리절을 넣음
+2021년도에 가입한 유저 수는 변동이 없기 때문에 FROM, WHERE절로만 구성해서 단일값 출력 */
+SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH,
+    COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
+		ROUND(COUNT(DISTINCT B.USER_ID) / (SELECT COUNT(DISTINCT USER_ID) 
+											FROM USER_INFO WHERE YEAR(JOINED) = "2021"), 1) AS PUCHASED_RATIO
+FROM USER_INFO A LEFT JOIN ONLINE_SALE B
+ON A.USER_ID = B.USER_ID
+WHERE YEAR(JOINED) = "2021" AND SALES_DATE IS NOT NULL
+GROUP BY YEAR, MONTH
+ORDER BY YEAR, MONTH
+```
+
+```sql
+/* 2nd 시도
+판매 년도, 월에 따라 출력되어야 했으므로, GROUP BY문에 년,도를 지정
+결과 :  A.USER_ID는 2021년도에 가입한 유저들이므로 COUNT에 잡히지 않고, 서브쿼리절 밖의 구문과 다를 게 없음 -> 실패 */
+SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH,
+    COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
+		(SELECT COUNT(DISTINCT B.USER_ID) / COUNT(DISTINCT A.USER_ID)
+		FROM USER_INFO A LEFT JOIN ONLINE_SALE B
+		ON A.USER_ID = B.USER_ID
+		WHERE YEAR(JOINED) = "2021"
+		GROUP BY YEAR, MONTH) AS PUCHASED_RATIO
+FROM USER_INFO A LEFT JOIN ONLINE_SALE B
+ON A.USER_ID = B.USER_ID
+WHERE YEAR(JOINED) = "2021"
+GROUP BY YEAR, MONTH
+ORDER BY YEAR, MONTH
+```
+
+```sql
+/* 3rd 시도
+ A.USER_ID는 2021년도에 가입한 유저들이므로 COUNT에 잡히지 않음
+또, 서브쿼리절 밖의 구문과 다를 게 없음
+따라서, 서브쿼리는 아니라고 판단 */
+SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH,
+    COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
+		ROUND(COUNT(DISTINCT B.USER_ID) / (SELECT COUNT(DISTINCT USER_ID) FROM USER_INFO WHERE YEAR(JOINED) = "2021"), 1) AS PUCHASED_RATIO
+FROM USER_INFO A LEFT JOIN ONLINE_SALE B
+ON A.USER_ID = B.USER_ID
+WHERE YEAR(JOINED) = "2021" AND SALES_DATE IS NOT NULL
+GROUP BY YEAR, MONTH
+ORDER BY YEAR, MONTH
+```
+<br>
