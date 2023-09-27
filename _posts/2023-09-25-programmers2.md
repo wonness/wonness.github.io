@@ -53,7 +53,8 @@ WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 
 <br>
 
-- **새로 배운 것**
+- **새로 배운 것**\
+  ![image](https://github.com/wonness/wonness.github.io/assets/141399098/9c991997-b00a-460e-9f62-cb3c137162dd)
   SELF JOIN은 순서가 바뀐 데이터가 중복되어 출력된다는 것을 간과하지 않기 !
 
 <br>
@@ -119,7 +120,7 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 
 <br>
 
-- **새로 배운 것**
+- **새로 배운 것**\
   GROUP BY로 그룹화하고 그 그룹에 속하는 여러 데이터를 집계하고 출력하려면, 집계함수를 사용해야 한다 !
 
 <br>
@@ -182,14 +183,10 @@ ORDER BY REVIEW_DATE, REVIEW_TEXT
 
 <br>
 
-- **새로 배운 것**
+- **새로 배운 것**\
   ORDER BY에서 정렬 지정한 컬럼은 SELECT절에서도 지정해 주어야 한다.
   
 <br>
-
-## 🏁 입양 시각 구하기 (2)
-
-
 
 ## 🏁 상품을 구매한 회원 비율 구하기
 
