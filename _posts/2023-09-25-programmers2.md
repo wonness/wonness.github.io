@@ -197,7 +197,7 @@ ORDER BY REVIEW_DATE, REVIEW_TEXT
 
 USER_INFO 테이블과 ONLINE_SALE 테이블에서 2021년에 가입한 전체 회원들 중 상품을 구매한 회원수와 상품을 구매한 회원의 비율(=2021년에 가입한 회원 중 상품을 구매한 회원수 / 2021년에 가입한 전체 회원 수)을 년, 월 별로 출력하시오.\
 (상품을 구매한 회원의 비율은 소수점 두번째자리에서 반올림, 년 기준 오름차순 정렬, 년이 같다면 월 기준오름차순 정렬)\
-<span style="background-color:#f5f0ff">\# </span>
+<span style="background-color:#f5f0ff">\#JOIN #Sub-Query</span>
 
 <br>
 
@@ -237,7 +237,7 @@ ORDER BY YEAR, MONTH
 ```
 
 1. `FROM` : 회원가입을 하고 구매하지 않은 회원이 있을 것이라고 판단하여, `USER_INFO`와 `ONLINE_SALE`테이블을 LEFT JOIN했다. 
-2. `WHERE` : 2021년에 가입한 회원 데이터를 필터링한다. 그리고, LEFT JOIN을 하여 값이 비어있는 ONLINE_SALE 테이블의 데이터를 처리한다.
+2. `WHERE` : 2021년에 가입한 회원 데이터를 필터링한다. 그리고, LEFT JOIN을 하여 값이 비어있는 ONLINE_SALE 테이블의 NULL값을 처리한다.
 3. `GROUP BY` : 판매 년, 월 별로 그룹화한다.
 4. `SELECT` : 판매 년, 월, 구매 회원 수를 출력한다. 그리고, (2021년 가입한 회원 중 구매 회원 수 / 2021년 가입한 전체 회원 수)를 구하기 위해, 분모에 가입 회원 정보를 담은 테이블에서 가입일이 2021년인 데이터를 필터링하고, 회원 수를 출력한다.
 
