@@ -54,7 +54,7 @@ WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 <br>
 
 - **새로 배운 것**\
-  ![image](https://github.com/wonness/wonness.github.io/assets/141399098/9c991997-b00a-460e-9f62-cb3c137162dd)
+  ![image](https://github.com/wonness/wonness.github.io/assets/141399098/63015b34-50b3-40d4-8769-821378610f3e)
   SELF JOIN은 순서가 바뀐 데이터가 중복되어 출력된다는 것을 간과하지 않기 !
 
 <br>
@@ -205,23 +205,8 @@ USER_INFO 테이블과 ONLINE_SALE 테이블에서 2021년에 가입한 전체 �
 
 ```sql
 /* 1st 시도
-비율 구할 때, 분모에 서브쿼리절을 넣음
-2021년도에 가입한 유저 수는 변동이 없기 때문에 FROM, WHERE절로만 구성해서 단일값 출력 */
-SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH,
-    COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
-		ROUND(COUNT(DISTINCT B.USER_ID) / (SELECT COUNT(DISTINCT USER_ID) 
-											FROM USER_INFO WHERE YEAR(JOINED) = "2021"), 1) AS PUCHASED_RATIO
-FROM USER_INFO A LEFT JOIN ONLINE_SALE B
-ON A.USER_ID = B.USER_ID
-WHERE YEAR(JOINED) = "2021" AND SALES_DATE IS NOT NULL
-GROUP BY YEAR, MONTH
-ORDER BY YEAR, MONTH
-```
-
-```sql
-/* 2nd 시도
-판매 년도, 월에 따라 출력되어야 했으므로, GROUP BY문에 년,도를 지정
-결과 :  A.USER_ID는 2021년도에 가입한 유저들이므로 COUNT에 잡히지 않고, 서브쿼리절 밖의 구문과 다를 게 없음 -> 실패 */
+판매 년도, 월에 따라 출력해야 하므로, GROUP BY문에 년,도를 지정
+결과 : 그룹핑때문에 2021년도에 가입한 회원들(A.USER_ID)이 COUNT에 잡히지 않고, 서브쿼리절이 밖의 쿼리와 다를 게 없음 -> 실패 */
 SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH,
     COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
 		(SELECT COUNT(DISTINCT B.USER_ID) / COUNT(DISTINCT A.USER_ID)
@@ -237,17 +222,23 @@ ORDER BY YEAR, MONTH
 ```
 
 ```sql
-/* 3rd 시도
- A.USER_ID는 2021년도에 가입한 유저들이므로 COUNT에 잡히지 않음
-또, 서브쿼리절 밖의 구문과 다를 게 없음
-따라서, 서브쿼리는 아니라고 판단 */
+/* 2nd 시도
+비율을 계산할 때, 분모인 2021년에 가입한 전체 회원 수를 구하려면 서브쿼리를 만들어야 함 (GROUP BY로 상품 구매 년, 월을 그룹핑했기 때문)
+2021년도에 가입한 유저 수는 변동이 없기 때문에 FROM, WHERE절로만 구성해서 단일값 출력 */
 SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH,
     COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
-		ROUND(COUNT(DISTINCT B.USER_ID) / (SELECT COUNT(DISTINCT USER_ID) FROM USER_INFO WHERE YEAR(JOINED) = "2021"), 1) AS PUCHASED_RATIO
+		ROUND(COUNT(DISTINCT B.USER_ID) / (SELECT COUNT(DISTINCT USER_ID) 
+						FROM USER_INFO WHERE YEAR(JOINED) = "2021"), 1) AS PUCHASED_RATIO
 FROM USER_INFO A LEFT JOIN ONLINE_SALE B
 ON A.USER_ID = B.USER_ID
 WHERE YEAR(JOINED) = "2021" AND SALES_DATE IS NOT NULL
 GROUP BY YEAR, MONTH
 ORDER BY YEAR, MONTH
 ```
+
+1. `FROM` : 회원가입을 하고 구매하지 않은 회원이 있을 것이라고 판단하여, `USER_INFO`와 `ONLINE_SALE`테이블을 LEFT JOIN했다. 
+2. `WHERE` : 2021년에 가입한 회원 데이터를 필터링한다. 그리고, LEFT JOIN을 하여 값이 비어있는 ONLINE_SALE 테이블의 데이터를 처리한다.
+3. `GROUP BY` : 판매 년, 월 별로 그룹화한다.
+4. `SELECT` : 판매 년, 월, 구매 회원 수를 출력한다. 그리고, (2021년 가입한 회원 중 구매 회원 수 / 2021년 가입한 전체 회원 수)를 구하기 위해, 분모에 가입 회원 정보를 담은 테이블에서 가입일이 2021년인 데이터를 필터링하고, 회원 수를 출력한다.
+
 <br>
