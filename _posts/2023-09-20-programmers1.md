@@ -36,9 +36,7 @@ Programmers의 SQL 난이도 1,2,3 문제를 풀어보았습니다.\
 - **문제 풀이**
 
 ```sql
-/* 1st 시도
-between으로 날짜 범위 구하기 성공
-but, 버전 이슈로 DATE() 사용 불가능 */
+-- 1st 시도
 SELECT A.TITLE, A.BOARD_ID,
         B.REPLY_ID, B.WRITER_ID, B.CONTENTS, 
         DATE(B.CREATED_DATE)
@@ -47,10 +45,11 @@ ON A.BOARD_ID = B.BOARD_ID
 WHERE A.CREATED_DATE BETWEEN "2022-10-01" AND "2022-10-31"
 ORDER BY B.CREATED_DATE, A.TITLE ;
 ```
+between으로 날짜 범위 구하기 성공\
+but, 버전 이슈로 DATE() 사용 불가능
 
 ```sql
-/* 2nd 시도
-DATE_FORMAT() 함수 사용해서 날짜 포매팅 */
+-- 2nd 시도
 SELECT A.TITLE, A.BOARD_ID,
         B.REPLY_ID, B.WRITER_ID, B.CONTENTS, 
         DATE_FORMAT(B.CREATED_DATE, "%Y-%m-%d") as CREATED_DATE
@@ -61,6 +60,9 @@ WHERE A.CREATED_DATE LIKE "2022-10%"
 -- WHERE DATE_FORMAT(A.CREATED_DATE, "%Y-%m") = "2022-10"
 ORDER BY B.CREATED_DATE, TITLE
 ```
+DATE_FORMAT() 함수 사용해서 날짜 포매팅
+
+<br>
 
 1. `FROM` : `USED_GOODS_BOARD` 테이블과 `USED_GOODS_REPLY` 테이블을 INNER JOIN 한다.
 2. `WHERE` : 2022년 10월 작성된 게시글을 필터링하기 위해 `USED_GOODS_BOARD` 테이블의 CREATED_DATE 컬럼에 조건을 둔다.
