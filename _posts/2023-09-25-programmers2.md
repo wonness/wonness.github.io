@@ -30,23 +30,25 @@ Programmers의 SQL 난이도 4,5 문제를 풀어보았습니다.\
 - **문제 풀이**
 
 ```sql
-/* 1st 시도
-우유와 우유, 요거트와 요거트가 있는 행을 걸러내는 데 실패 */
+-- 1st 시도
 SELECT DISTINCT A.CART_ID
 FROM CART_PRODUCTS A JOIN CART_PRODUCTS B
 ON A.CART_ID = B.CART_ID
 WHERE A.NAME IN ("Milk", "Yogurt") AND B.NAME IN ("Milk", "Yogurt")
 ```
+결과 : 우유와 우유, 요거트와 요거트가 있는 행을 걸러내는 데 실패
 
 ```sql
-/* 2nd 시도
-한 명이 우유와 요거트를 장바구니에 담아놨을 때 셀프조인을 하면, milk-yogurt, yogurt-milk ... 등등의 조합들이 출력
-즉, 조합이 순서만 바뀐 채로 중복되어서 출력되기 때문에, milk-yogurt or yogurt-milk 중 하나의 조합을 조건으로 지정해주면 된다. */
+-- 2nd 시도
 SELECT DISTINCT A.CART_ID
 FROM CART_PRODUCTS A JOIN CART_PRODUCTS B
 ON A.CART_ID = B.CART_ID
 WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 ```
+한 명이 우유와 요거트를 장바구니에 담아놨을 때 셀프조인을 하면, milk-yogurt, yogurt-milk ... 등등의 조합들이 출력\
+즉, 조합이 순서만 바뀐 채로 중복되어서 출력되기 때문에, milk-yogurt or yogurt-milk 중 하나의 조합을 조건으로 지정해주면 된다.
+
+<br>
 
 1. `FROM` : 자기 자신의 테이블을 조인시켜, 한 장바구니에 담아놓은 상품들의 조합을 불러온다. 
 2. `WHERE` : 장바구니에 우유와 요거트가 동시에 담긴 데이터를 필터링한다. 
@@ -76,8 +78,7 @@ WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 - **문제 풀이**
 
 ```sql
-/* 1st 시도
-결과 : GROUP BY를 해줘서, SALES*PRICE는 첫 행에서 계산된 것을 출력함 -> 집계함수 필요 */
+-- 1st 시도
 SELECT C.AUTHOR_ID, AUTHOR_NAME, CATEGORY, (SALES*PRICE) AS TOTAL_SALES
 FROM BOOK_SALES A JOIN BOOK B JOIN AUTHOR C
 ON A.BOOK_ID = B.BOOK_ID AND B.AUTHOR_ID = C.AUTHOR_ID
@@ -85,13 +86,10 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
+결과 : GROUP BY를 해줘서, SALES*PRICE는 첫 행에서 계산된 것을 출력함 -> 집계함수 필요
 
 ```sql
-/* 2nd 시도
-서브쿼리 테이블 : WHERE절까지 조건을 준 테이블에 SALES*PRICE를 계산
-기본 테이블 : GROUP BY, ORDER BY를 하고 SUM(SALES*PRICE)를 계산
-GROUP BY를 하면, SALES*PRICE가 행별로 계산이 안될 것이라 생각하여 아래의 쿼리를 짬
-결과 : 컬럼명 중복으로 실패*/
+-- 2nd 시도
 SELECT C.AUTHOR_ID, AUTHOR_NAME, CATEGORY, SUM(TOTAL_SALES) AS TOTAL_SALES
 FROM(SELECT *, (SALES*PRICE) AS TOTAL_SALES
     FROM BOOK_SALES A JOIN BOOK B JOIN AUTHOR C
@@ -100,11 +98,14 @@ FROM(SELECT *, (SALES*PRICE) AS TOTAL_SALES
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
+서브쿼리 테이블 : WHERE절까지 조건을 준 테이블에 SALES X PRICE를 계산\
+기본 테이블 : GROUP BY, ORDER BY를 하고 SUM(SALES X PRICE)를 계산\
+GROUP BY를 하면, SALES X PRICE가 행별로 계산이 안될 것이라 생각하여 위와 같은 쿼리를 짬\
+결과 : 컬럼명 중복으로 실패
+
 
 ```sql
-/* 3rd 시도
-FROM절에 서브쿼리를 넣는 방법은 잘못됐다고 생각하여, 1st 쿼리에 SUM(SALES*PRICE)만 수정함
-GROUP BY를 해도 행별로 SALES*PRICE계산이 가능했음 */
+-- 3rd 시도
 SELECT C.AUTHOR_ID, AUTHOR_NAME, CATEGORY, SUM(SALES*PRICE) AS TOTAL_SALES
 FROM BOOK_SALES A JOIN BOOK B JOIN AUTHOR C
 ON A.BOOK_ID = B.BOOK_ID AND B.AUTHOR_ID = C.AUTHOR_ID
@@ -112,6 +113,10 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
+FROM절에 서브쿼리를 넣는 방법은 잘못됐다고 생각하여, 1st 쿼리에 SUM(SALES X PRICE)만 수정함\
+GROUP BY를 해도 행별로 SALES X PRICE계산이 가능했음
+
+<br>
 
 1. `FROM` : `BOOK_SALES` 테이블, `BOOK` 테이블, `AUTHOR` 테이블을 INNER JOIN한다.
 2. `WHERE` : 2022년 1월 판매한 도서 판매 데이터를 필터링한다. 
@@ -141,9 +146,7 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 - **문제 풀이**
 
 ```sql
-/* 1st 시도
-LIMIT을 사용해서 리뷰를 가장 많이 남긴 회원을 찾으려 함
-결과 : ORDER BY절에서 지정한 집계함수가 SELECT 절에 없어서 오류 발생 */
+-- 1st 시도
 SELECT MEMBER_NAME, REVIEW_TEXT, 
     DATE_FORMAT(REVIEW_DATE,"%Y-%m-%d") AS REVIEW_DATE
 FROM MEMBER_PROFILE A JOIN REST_REVIEW B
@@ -156,10 +159,11 @@ WHERE A.MEMBER_ID IN (SELECT A.MEMBER_ID
                       LIMIT 1)
 ORDER BY REVIEW_DATE, REVIEW_TEXT
 ```
+LIMIT을 사용해서 리뷰를 가장 많이 남긴 회원을 찾으려 함\
+결과 : ORDER BY절에서 지정한 집계함수가 SELECT 절에 없어서 오류 발생
 
 ```sql
-/* 2nd 시도
-리뷰 수로 필터링 하기 위해, WHERE절 서브쿼리의 HAVING절에 또 서브쿼리를 추가 */
+-- 2nd 시도
 SELECT MEMBER_NAME, REVIEW_TEXT, 
     DATE_FORMAT(REVIEW_DATE,"%Y-%m-%d") AS REVIEW_DATE
 FROM MEMBER_PROFILE A JOIN REST_REVIEW B
@@ -177,6 +181,9 @@ WHERE A.MEMBER_ID IN (SELECT A.MEMBER_ID
                                        LIMIT 1))
 ORDER BY REVIEW_DATE, REVIEW_TEXT
 ```
+리뷰 수로 필터링 하기 위해, WHERE절 서브쿼리의 HAVING절에 또 서브쿼리를 추가
+
+<br>
 
 1. `FROM` : `MEMBER_PROFILE`과 `REST_REVIEW` 테이블을 INNER JOIN한다.
 2. `WHERE` : `MEMBER_PROFILE`과 `REST_REVIEW` 테이블을 INNER JOIN한 테이블에서 가장 높은 리뷰 수로 데이터를 필터링 한다. 그리고, 그 리뷰 수를 가진 회원을 조회하여 필터링한다. 
@@ -204,9 +211,7 @@ USER_INFO 테이블과 ONLINE_SALE 테이블에서 2021년에 가입한 전체 �
 - **문제 풀이**
 
 ```sql
-/* 1st 시도
-판매 년도, 월에 따라 출력해야 하므로, GROUP BY문에 년,도를 지정
-결과 : 그룹핑때문에 2021년도에 가입한 회원들(A.USER_ID)이 COUNT에 잡히지 않고, 서브쿼리절이 밖의 쿼리와 다를 게 없음 -> 실패 */
+-- 1st 시도
 SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH,
     COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
 		(SELECT COUNT(DISTINCT B.USER_ID) / COUNT(DISTINCT A.USER_ID)
@@ -220,11 +225,11 @@ WHERE YEAR(JOINED) = "2021"
 GROUP BY YEAR, MONTH
 ORDER BY YEAR, MONTH
 ```
+판매 년도, 월에 따라 출력해야 하므로, GROUP BY문에 년,도를 지정\
+결과 : 그룹핑때문에 2021년도에 가입한 회원들(A.USER_ID)이 COUNT에 잡히지 않고, 서브쿼리절이 밖의 쿼리와 다를 게 없음 -> 실패 
 
 ```sql
-/* 2nd 시도
-비율을 계산할 때, 분모인 2021년에 가입한 전체 회원 수를 구하려면 서브쿼리를 만들어야 함 (GROUP BY로 상품 구매 년, 월을 그룹핑했기 때문)
-2021년도에 가입한 유저 수는 변동이 없기 때문에 FROM, WHERE절로만 구성해서 단일값 출력 */
+-- 2nd 시도
 SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH,
     COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
 		ROUND(COUNT(DISTINCT B.USER_ID) / (SELECT COUNT(DISTINCT USER_ID) 
@@ -235,6 +240,10 @@ WHERE YEAR(JOINED) = "2021" AND SALES_DATE IS NOT NULL
 GROUP BY YEAR, MONTH
 ORDER BY YEAR, MONTH
 ```
+비율을 계산할 때, 분모인 2021년에 가입한 전체 회원 수를 구하려면 서브쿼리를 만들어야 함 (GROUP BY로 상품 구매 년, 월을 그룹핑했기 때문)\
+2021년도에 가입한 유저 수는 변동이 없기 때문에 FROM, WHERE절로만 구성해서 단일값 출력 
+
+<br>
 
 1. `FROM` : 회원가입을 하고 구매하지 않은 회원이 있을 것이라고 판단하여, `USER_INFO`와 `ONLINE_SALE`테이블을 LEFT JOIN했다. 
 2. `WHERE` : 2021년에 가입한 회원 데이터를 필터링한다. 그리고, LEFT JOIN을 하여 값이 비어있는 ONLINE_SALE 테이블의 NULL값을 처리한다.
