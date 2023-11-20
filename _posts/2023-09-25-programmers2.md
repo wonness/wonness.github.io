@@ -86,7 +86,7 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-결과 : GROUP BY를 해줘서, SALES*PRICE는 첫 행에서 계산된 것을 출력함 -> 집계함수 필요
+결과 : GROUP BY를 해줘서, `SALES*PRICE`는 첫 행에서 계산된 것을 출력함 -> 집계함수 필요
 
 ```sql
 -- 2nd 시도
@@ -98,9 +98,9 @@ FROM(SELECT *, (SALES*PRICE) AS TOTAL_SALES
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-서브쿼리 테이블 : WHERE절까지 조건을 준 테이블에 SALES X PRICE를 계산\
-기본 테이블 : GROUP BY, ORDER BY를 하고 SUM(SALES X PRICE)를 계산\
-GROUP BY를 하면, SALES X PRICE가 행별로 계산이 안될 것이라 생각하여 위와 같은 쿼리를 짬\
+서브쿼리 테이블 : WHERE절까지 조건을 준 테이블에 `SALES X PRICE`를 계산\
+기본 테이블 : GROUP BY, ORDER BY를 하고 `SUM(SALES X PRICE)`를 계산\
+GROUP BY를 하면, `SALES X PRICE`가 행별로 계산이 안될 것이라 생각하여 위와 같은 쿼리를 짬\
 결과 : 컬럼명 중복으로 실패
 
 
@@ -113,8 +113,8 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-FROM절에 서브쿼리를 넣는 방법은 잘못됐다고 생각하여, 1st 쿼리에 SUM(SALES X PRICE)만 수정함\
-GROUP BY를 해도 행별로 SALES X PRICE계산이 가능했음
+FROM절에 서브쿼리를 넣는 방법은 잘못됐다고 생각하여, 1st 쿼리에 `SUM(SALES X PRICE)`만 수정함\
+GROUP BY를 해도 행별로 `SALES X PRICE`계산이 가능했음
 
 <br>
 
