@@ -46,7 +46,7 @@ WHERE A.CREATED_DATE BETWEEN "2022-10-01" AND "2022-10-31"
 ORDER BY B.CREATED_DATE, A.TITLE ;
 ```
 between으로 날짜 범위 구하기 성공\
-but, 버전 이슈로 DATE() 사용 불가능
+but, 버전 이슈로 `DATE()` 사용 불가능
 
 ```sql
 -- 2nd 시도
@@ -60,7 +60,7 @@ WHERE A.CREATED_DATE LIKE "2022-10%"
 -- WHERE DATE_FORMAT(A.CREATED_DATE, "%Y-%m") = "2022-10"
 ORDER BY B.CREATED_DATE, TITLE
 ```
-DATE_FORMAT() 함수 사용해서 날짜 포매팅
+`DATE_FORMAT()` 함수 사용해서 날짜 포매팅
 
 <br>
 
@@ -71,7 +71,7 @@ DATE_FORMAT() 함수 사용해서 날짜 포매팅
 <br>
 
 - **새로 배운 것**
-  - DATE_FORAMT(날짜, "형식") : 날짜를 지정 형식으로 출력
+  - `DATE_FORAMT(날짜, "형식")` : 날짜를 지정 형식으로 출력
     - 형식
       
       |기호|역할|기호|역할|
