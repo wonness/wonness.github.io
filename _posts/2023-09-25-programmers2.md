@@ -36,7 +36,7 @@ FROM CART_PRODUCTS A JOIN CART_PRODUCTS B
 ON A.CART_ID = B.CART_ID
 WHERE A.NAME IN ("Milk", "Yogurt") AND B.NAME IN ("Milk", "Yogurt")
 ```
-<span style="font-size: 10px ;"> 결과 : 우유와 우유, 요거트와 요거트가 있는 행을 걸러내는 데 실패
+<span style="font-size: 12px ;"> 결과 : 우유와 우유, 요거트와 요거트가 있는 행을 걸러내는 데 실패
 
 <br>
 
@@ -47,7 +47,8 @@ FROM CART_PRODUCTS A JOIN CART_PRODUCTS B
 ON A.CART_ID = B.CART_ID
 WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 ```
-<span style="font-size: 10px ;"> 한 명이 우유와 요거트를 장바구니에 담아놨을 때 셀프조인을 하면, milk-yogurt, yogurt-milk ... 등등의 조합들이 출력\
+<span style="font-size: 10px ;"> 한 명이 우유와 요거트를 장바구니에 담아놨을 때 셀프조인을 하면, milk-yogurt, yogurt-milk ... 등등의 조합들이 출력
+
 <span style="font-size: 10px ;"> 즉, 조합이 순서만 바뀐 채로 중복되어서 출력되기 때문에, milk-yogurt or yogurt-milk 중 하나의 조합을 조건으로 지정해주면 된다.
 
 <br>
@@ -88,7 +89,8 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-<span style="font-size: 10px ;"> 결과 : GROUP BY를 해줘서, `SALES*PRICE`는 첫 행에서 계산된 것을 출력함\ 
+<span style="font-size: 10px ;"> 결과 : GROUP BY를 해줘서, `SALES*PRICE`는 첫 행에서 계산된 것을 출력함
+
 <span style="font-size: 10px ;"> -> 집계함수 필요
 
 <br>
@@ -103,9 +105,12 @@ FROM(SELECT *, (SALES*PRICE) AS TOTAL_SALES
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-<span style="font-size: 10px ;"> 서브쿼리 테이블 : WHERE절까지 조건을 준 테이블에 `SALES X PRICE`를 계산\
-<span style="font-size: 10px ;"> 기본 테이블 : GROUP BY, ORDER BY를 하고 `SUM(SALES X PRICE)`를 계산\
-<span style="font-size: 10px ;"> GROUP BY를 하면, `SALES X PRICE`가 행별로 계산이 안될 것이라 생각하여 위와 같은 쿼리를 짬\
+<span style="font-size: 10px ;"> 서브쿼리 테이블 : WHERE절까지 조건을 준 테이블에 `SALES X PRICE`를 계산
+
+<span style="font-size: 10px ;"> 기본 테이블 : GROUP BY, ORDER BY를 하고 `SUM(SALES X PRICE)`를 계산
+
+<span style="font-size: 10px ;"> GROUP BY를 하면, `SALES X PRICE`가 행별로 계산이 안될 것이라 생각하여 위와 같은 쿼리를 짬
+
 <span style="font-size: 10px ;"> 결과 : 컬럼명 중복으로 실패
 
 <br>
@@ -119,7 +124,8 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-<span style="font-size: 10px ;"> FROM절에 서브쿼리를 넣는 방법은 잘못됐다고 생각하여, 1st 쿼리에 `SUM(SALES X PRICE)`만 수정함\
+<span style="font-size: 10px ;"> FROM절에 서브쿼리를 넣는 방법은 잘못됐다고 생각하여, 1st 쿼리에 `SUM(SALES X PRICE)`만 수정함
+
 <span style="font-size: 10px ;"> 결과 : 집계함수를 사용하니, 그룹별 `SALES X PRICE` 계산이 가능
 
 <br>
@@ -165,7 +171,8 @@ WHERE A.MEMBER_ID IN (SELECT A.MEMBER_ID
                       LIMIT 1)
 ORDER BY REVIEW_DATE, REVIEW_TEXT
 ```
-<span style="font-size: 10px ;"> LIMIT을 사용해서 리뷰를 가장 많이 남긴 회원을 찾으려 함\
+<span style="font-size: 10px ;"> LIMIT을 사용해서 리뷰를 가장 많이 남긴 회원을 찾으려 함
+
 <span style="font-size: 10px ;"> 결과 : ORDER BY절에서 지정한 집계함수가 SELECT 절에 없어서 오류 발생
 
 <br>
@@ -233,8 +240,9 @@ WHERE YEAR(JOINED) = "2021"
 GROUP BY YEAR, MONTH
 ORDER BY YEAR, MONTH
 ```
-<span style="font-size: 10px ;"> 판매 년도, 월에 따라 출력해야 하므로, GROUP BY문에 년,도를 지정\
-<span style="font-size: 10px ;"> 결과 : 그룹핑때문에 2021년도에 가입한 회원들(A.USER_ID)이 COUNT에 잡히지 않고, 서브쿼리절이 밖의 쿼리와 다를 게 없음 -> 실패
+<span style="font-size: 10px ;"> 판매 년도, 월에 따라 출력해야 하므로, GROUP BY문에 년,도를 지정
+
+<span style="font-size: 10px ;"> 결과 : 그룹핑때문에 2021년도에 가입한 회원들(A.USER_ID)이 COUNT에 잡히지 않고, 서브쿼리절이 밖의 쿼리와 다를 게 없음
 
 <br>
 
@@ -250,7 +258,8 @@ WHERE YEAR(JOINED) = "2021" AND SALES_DATE IS NOT NULL
 GROUP BY YEAR, MONTH
 ORDER BY YEAR, MONTH
 ```
-<span style="font-size: 10px ;"> 비율을 계산할 때, 분모인 2021년에 가입한 전체 회원 수를 구하려면 서브쿼리를 만들어야 함 (GROUP BY로 상품 구매 년, 월을 그룹핑했기 때문)\
+<span style="font-size: 10px ;"> 비율을 계산할 때, 분모인 2021년에 가입한 전체 회원 수를 구하려면 서브쿼리를 만들어야 함 (GROUP BY로 상품 구매 년, 월을 그룹핑했기 때문)
+
 <span style="font-size: 10px ;"> 2021년도에 가입한 유저 수는 변동이 없기 때문에 FROM, WHERE절로만 구성해서 단일값 출력 
 
 <br>
