@@ -36,7 +36,7 @@ FROM CART_PRODUCTS A JOIN CART_PRODUCTS B
 ON A.CART_ID = B.CART_ID
 WHERE A.NAME IN ("Milk", "Yogurt") AND B.NAME IN ("Milk", "Yogurt")
 ```
-<span style="font-size: 12px ;"> 결과 : 우유와 우유, 요거트와 요거트가 있는 행을 걸러내는 데 실패
+<span style="font-size: 15px ;"> 결과 : 우유와 우유, 요거트와 요거트가 있는 행을 걸러내는 데 실패
 
 <br>
 
@@ -47,7 +47,7 @@ FROM CART_PRODUCTS A JOIN CART_PRODUCTS B
 ON A.CART_ID = B.CART_ID
 WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 ```
-<span style="font-size: 10px ;"> 한 명이 우유와 요거트를 장바구니에 담아놨을 때 셀프조인을 하면, milk-yogurt, yogurt-milk ... 등등의 조합들이 출력
+<span style="font-size: 15px ;"> 한 명이 우유와 요거트를 장바구니에 담아놨을 때 셀프조인을 하면, milk-yogurt, yogurt-milk ... 등등의 조합들이 출력
 
 <span style="font-size: 10px ;"> 즉, 조합이 순서만 바뀐 채로 중복되어서 출력되기 때문에, milk-yogurt or yogurt-milk 중 하나의 조합을 조건으로 지정해주면 된다.
 
