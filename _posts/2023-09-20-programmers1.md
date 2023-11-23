@@ -33,28 +33,30 @@ Programmers의 SQL 난이도 1,2,3 문제를 풀어보았습니다.\
 
 <br>
 
-- **문제 풀이**
+💻 **문제 풀이**
 
+- 1st 시도
 ```sql
--- 1st 시도
-SELECT A.TITLE, A.BOARD_ID,
-        B.REPLY_ID, B.WRITER_ID, B.CONTENTS, 
-        DATE(B.CREATED_DATE)
-FROM USED_GOODS_BOARD A RIGHT JOIN USED_GOODS_REPLY B
-ON A.BOARD_ID = B.BOARD_ID
+SELECT A.TITLE, A.BOARD_ID
+     , B.REPLY_ID, B.WRITER_ID, B.CONTENTS
+     , DATE(B.CREATED_DATE)
+FROM USED_GOODS_BOARD A
+RIGHT JOIN USED_GOODS_REPLY B ON A.BOARD_ID = B.BOARD_ID
 WHERE A.CREATED_DATE BETWEEN "2022-10-01" AND "2022-10-31"
 ORDER BY B.CREATED_DATE, A.TITLE ;
 ```
 between으로 날짜 범위 구하기 성공\
 but, 버전 이슈로 `DATE()` 사용 불가능
 
+<br>
+
+- 2nd 시도
 ```sql
--- 2nd 시도
-SELECT A.TITLE, A.BOARD_ID,
-        B.REPLY_ID, B.WRITER_ID, B.CONTENTS, 
-        DATE_FORMAT(B.CREATED_DATE, "%Y-%m-%d") as CREATED_DATE
-FROM USED_GOODS_BOARD AS A JOIN USED_GOODS_REPLY AS B
-ON A.BOARD_ID = B.BOARD_ID
+SELECT A.TITLE, A.BOARD_ID
+     , B.REPLY_ID, B.WRITER_ID, B.CONTENTS
+     , DATE_FORMAT(B.CREATED_DATE, "%Y-%m-%d") as CREATED_DATE
+FROM USED_GOODS_BOARD AS A
+JOIN USED_GOODS_REPLY AS B ON A.BOARD_ID = B.BOARD_ID
 WHERE A.CREATED_DATE LIKE "2022-10%"
 -- WHERE A.CREATED_DATE BETWEEN "2022-10-01" AND "2022-10-31"
 -- WHERE DATE_FORMAT(A.CREATED_DATE, "%Y-%m") = "2022-10"
@@ -70,7 +72,7 @@ ORDER BY B.CREATED_DATE, TITLE
 
 <br>
 
-- **새로 배운 것**
+💡 **새로 배운 것**
   - `DATE_FORAMT(날짜, "형식")` : 날짜를 지정 형식으로 출력
     - 형식
       
@@ -91,13 +93,15 @@ ORDER BY B.CREATED_DATE, TITLE
 
 <br>
 
-- **문제 풀이**
+💻 **문제 풀이**
 ```sql
-SELECT CAR_ID,
-    CASE WHEN CAR_ID IN 
-        (SELECT CAR_ID FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
-        WHERE "2022-10-16" BETWEEN START_DATE AND END_DATE)
-        THEN "대여중" ELSE "대여 가능" END AVAILABILITY
+SELECT CAR_ID
+     , CASE WHEN CAR_ID IN (SELECT CAR_ID
+                            FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
+                            WHERE "2022-10-16" BETWEEN START_DATE AND END_DATE)
+            THEN "대여중"
+            ELSE "대여 가능"
+       END AS AVAILABILITY
 FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY
 GROUP BY CAR_ID
 ORDER BY CAR_ID DESC
@@ -108,8 +112,9 @@ ORDER BY CAR_ID DESC
 
 <br>
 
-- **새로 배운 것**\
-GROUP BY를 하면 하나의 CAR_ID에 속하는 데이터 하나만을 가지고 집계할 수 있다. 예를 들어, CAR_ID = 3의 대여 기록이 여러 건 있다고 할 때, 첫번째 튜플만 집계에 고려한다.\
+💡 **새로 배운 것**\
+GROUP BY를 하면 하나의 CAR_ID에 속하는 데이터 하나만을 가지고 집계할 수 있다. \
+예를 들어, CAR_ID = 3의 대여 기록이 여러 건 있다고 할 때, 첫번째 튜플만 집계에 고려한다.\
 <span style="text-decoration: underline;">즉, 여러 건의 대여 기록에 "2022-10-16"이 속해있어도, 첫번째 튜플이 아니면 "대여 가능"을 출력한다.</span>\
 → 이 문제의 경우, SELECT 절에서 서브쿼리를 이용해 모든 데이터를 검색해서 집계할 수 있도록 했다.
 
@@ -128,11 +133,11 @@ GROUP BY를 하면 하나의 CAR_ID에 속하는 데이터 하나만을 가지�
 
 <br>
 
-- **문제 풀이**
+💻 **문제 풀이**
 ```sql
 SELECT A.ANIMAL_ID, A.NAME
-FROM ANIMAL_INS A LEFT JOIN ANIMAL_OUTS B
-ON A.ANIMAL_ID = B.ANIMAL_ID
+FROM ANIMAL_INS A
+LEFT JOIN ANIMAL_OUTS B ON A.ANIMAL_ID = B.ANIMAL_ID
 WHERE A.ANIMAL_ID IN (SELECT B.ANIMAL_ID FROM ANIMAL_OUTS)
 ORDER BY DATEDIFF(B.DATETIME, A.DATETIME) DESC
 LIMIT 2
