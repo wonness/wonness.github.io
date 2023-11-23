@@ -248,8 +248,8 @@ WHERE YEAR(JOINED) = "2021" AND SALES_DATE IS NOT NULL
 GROUP BY YEAR, MONTH
 ORDER BY YEAR, MONTH
 ```
-비율을 계산할 때, 분모인 2021년에 가입한 전체 회원 수를 구하려면 서브쿼리를 만들어야 함 (GROUP BY로 상품 구매 년, 월을 그룹핑했기 때문)\
-2021년도에 가입한 유저 수는 변동이 없기 때문에 FROM, WHERE절로만 구성해서 단일값 출력 
+상품을 구매한 회원의 비율에서, 분모인 "2021년도에 가입한 전체 회원 수"는 변동이 없는 고정값
+하지만, GROUP BY로 상품 구매 년, 월을 그룹핑했기 때문에, 서브쿼리를 이용하여 고정값 출력
 
 <br>
 
