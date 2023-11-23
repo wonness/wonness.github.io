@@ -30,6 +30,7 @@ Programmers의 SQL 난이도 4,5 문제를 풀어보았습니다.\
 💻 **문제 풀이**
 
 - 1st 시도
+  
 ```sql
 SELECT DISTINCT A.CART_ID
 FROM CART_PRODUCTS A
@@ -41,6 +42,7 @@ WHERE A.NAME IN ("Milk", "Yogurt") AND B.NAME IN ("Milk", "Yogurt")
 <br>
 
 - 2nd 시도
+  
 ```sql
 SELECT DISTINCT A.CART_ID
 FROM CART_PRODUCTS A
@@ -63,6 +65,8 @@ WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 
 <br>
 
+----------
+
 ## 🏁 저자 별 카테고리 별 매출액 집계하기
 
 |테이블|내용|
@@ -80,6 +84,7 @@ WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 💻 **문제 풀이**
 
 - 1st 시도
+
 ```sql
 SELECT C.AUTHOR_ID, AUTHOR_NAME, CATEGORY, (SALES*PRICE) AS TOTAL_SALES
 FROM BOOK_SALES A
@@ -94,6 +99,7 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 <br>
 
 - 2nd 시도
+  
 ```sql
 SELECT C.AUTHOR_ID, AUTHOR_NAME, CATEGORY, SUM(TOTAL_SALES) AS TOTAL_SALES
 FROM (SELECT *, (SALES*PRICE) AS TOTAL_SALES
@@ -111,6 +117,7 @@ GROUP BY를 하면 `SALES X PRICE`가 행 별로 집계가 안될 것이라 생�
 <br>
 
 - 3rd 시도
+  
 ```sql
 SELECT C.AUTHOR_ID, AUTHOR_NAME, CATEGORY, SUM(SALES*PRICE) AS TOTAL_SALES
 FROM BOOK_SALES A
@@ -136,6 +143,8 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 
 <br>
 
+---------
+
 ## 🏁 그룹 별 조건에 맞는 식당 목록 출력하기
 
 |테이블|내용|
@@ -152,6 +161,7 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 💻 **문제 풀이**
 
 - 1st 시도
+  
 ```sql
 SELECT MEMBER_NAME, REVIEW_TEXT
      , DATE_FORMAT(REVIEW_DATE,"%Y-%m-%d") AS REVIEW_DATE
@@ -171,6 +181,7 @@ ORDER BY와 LIMIT을 사용해서 리뷰를 가장 많이 남긴 회원을 찾�
 <br>
 
 - 2nd 시도
+  
 ```sql
 SELECT MEMBER_NAME, REVIEW_TEXT
      , DATE_FORMAT(REVIEW_DATE,"%Y-%m-%d") AS REVIEW_DATE
@@ -203,6 +214,8 @@ ORDER BY절의 집계함수와 SELECT절의 집계함수 통일\
   
 <br>
 
+---------
+
 ## 🏁 상품을 구매한 회원 비율 구하기
 
 |테이블|내용|
@@ -219,6 +232,7 @@ USER_INFO 테이블과 ONLINE_SALE 테이블에서 2021년에 가입한 전체 �
 💻 **문제 풀이**
 
 - 1st 시도
+  
 ```sql
 SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH
      , COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS
@@ -239,6 +253,7 @@ ORDER BY YEAR, MONTH
 <br>
 
 - 2nd 시도
+  
 ```sql
 SELECT YEAR(SALES_DATE) AS YEAR, MONTH(SALES_DATE) AS MONTH
      , COUNT(DISTINCT B.USER_ID) AS PUCHASED_USERS,
