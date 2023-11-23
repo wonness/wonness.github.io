@@ -27,7 +27,7 @@ Programmers의 SQL 난이도 4,5 문제를 풀어보았습니다.\
 
 <br>
 
-- **문제 풀이**
+- 💻 **문제 풀이**
 
 ```sql
 -- 1st 시도
@@ -55,7 +55,7 @@ WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 
 <br>
 
-- **새로 배운 것**\
+- 💡 **새로 배운 것**\
   ![image](https://github.com/wonness/wonness.github.io/assets/141399098/63015b34-50b3-40d4-8769-821378610f3e)
   SELF JOIN은 순서가 바뀐 데이터가 중복되어 출력된다는 것을 간과하지 않기 !
 
@@ -75,7 +75,7 @@ WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 
 <br>
 
-- **문제 풀이**
+- 💻 **문제 풀이**
 
 ```sql
 -- 1st 시도
@@ -86,7 +86,8 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-결과 : GROUP BY를 해줘서, `SALES*PRICE`는 첫 행에서 계산된 것을 출력함 -> 집계함수 필요
+결과 : GROUP BY를 해줘서, `SALES*PRICE`는 첫 행에서 계산된 것을 출력함\ 
+-> 집계함수 필요
 
 ```sql
 -- 2nd 시도
@@ -114,7 +115,7 @@ GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
 FROM절에 서브쿼리를 넣는 방법은 잘못됐다고 생각하여, 1st 쿼리에 `SUM(SALES X PRICE)`만 수정함\
-GROUP BY를 해도 행별로 `SALES X PRICE`계산이 가능했음
+결과 : 집계함수를 사용하니, 그룹별 `SALES X PRICE` 계산이 가능
 
 <br>
 
@@ -125,7 +126,7 @@ GROUP BY를 해도 행별로 `SALES X PRICE`계산이 가능했음
 
 <br>
 
-- **새로 배운 것**\
+- 💡 **새로 배운 것**\
   GROUP BY로 그룹화하고 그 그룹에 속하는 여러 데이터를 집계하고 출력하려면, 집계함수를 사용해야 한다 !
 
 <br>
@@ -143,7 +144,7 @@ GROUP BY를 해도 행별로 `SALES X PRICE`계산이 가능했음
 
 <br>
 
-- **문제 풀이**
+- 💻 **문제 풀이**
 
 ```sql
 -- 1st 시도
@@ -190,7 +191,7 @@ ORDER BY REVIEW_DATE, REVIEW_TEXT
 
 <br>
 
-- **새로 배운 것**\
+- 💡 **새로 배운 것**\
   ORDER BY에서 정렬 지정한 컬럼은 SELECT절에서도 지정해 주어야 한다.
   
 <br>
@@ -208,7 +209,7 @@ USER_INFO 테이블과 ONLINE_SALE 테이블에서 2021년에 가입한 전체 �
 
 <br>
 
-- **문제 풀이**
+- 💻 **문제 풀이**
 
 ```sql
 -- 1st 시도
