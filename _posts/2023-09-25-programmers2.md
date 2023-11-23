@@ -104,8 +104,9 @@ GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
 서브쿼리 테이블 : 2022년 1월 데이터를 필터링하고, 행 별로 `SALES X PRICE` 계산\
-기본 테이블 : GROUP BY 를 하고, `SUM(SALES X PRICE)` 집계\
-GROUP BY를 하면 `SALES X PRICE`가 행 별로 집계가 안될 것이라 생각하여, 서브쿼리에서 먼저 행 별로 집계해주고, GROUP BY를 한 기본 테이블에는 서브쿼리에서 집계한 변수를 이용하여 집계
+기본 테이블 : GROUP BY를 하고, `SUM(SALES X PRICE)` 집계\
+GROUP BY를 하면 `SALES X PRICE`가 행 별로 집계가 안될 것이라 생각하여, 위와 같은 쿼리를 짬\
+결과 : 컬럼명 중복으로 오류
 
 <br>
 
