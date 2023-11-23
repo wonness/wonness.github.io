@@ -36,6 +36,7 @@ Programmers의 SQL 난이도 1,2,3 문제를 풀어보았습니다.\
 💻 **문제 풀이**
 
 - 1st 시도
+  
 ```sql
 SELECT A.TITLE, A.BOARD_ID
      , B.REPLY_ID, B.WRITER_ID, B.CONTENTS
@@ -51,6 +52,7 @@ but, 버전 이슈로 `DATE()` 사용 불가능
 <br>
 
 - 2nd 시도
+  
 ```sql
 SELECT A.TITLE, A.BOARD_ID
      , B.REPLY_ID, B.WRITER_ID, B.CONTENTS
@@ -86,6 +88,8 @@ ORDER BY B.CREATED_DATE, TITLE
 
 <br>
 
+-----------
+
 ## 🏁 자동차 대여 기록에서 대여중/ 대여 가능 여부 구분하기
 `CAR_RENTAL_COMPANY_RENTAL_HISTORY` 테이블에서 2022년 10월 16일에 대여 중인 자동차인 경우 '대여중' 이라고 표시하고, 대여 중이지 않은 자동차인 경우 '대여 가능'을 표시하는 컬럼(컬럼명: AVAILABILITY)을 추가하여 자동차 ID와 AVAILABILITY 리스트를 출력하시오.\
 (자동차 ID 기준 내림차순 정렬)\
@@ -119,6 +123,8 @@ GROUP BY를 하면 하나의 CAR_ID에 속하는 데이터 하나만을 가지�
 → 이 문제의 경우, SELECT 절에서 서브쿼리를 이용해 모든 데이터를 검색해서 집계할 수 있도록 했다.
 
 <br>
+
+------------
 
 ## 🏁 오랜 기간 보호한 동물 (2)
 
