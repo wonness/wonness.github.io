@@ -88,7 +88,8 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-결과 : GROUP BY 때문에, `SALES*PRICE`는 그룹의 첫 행을 집계한 결과 출력 -> 집계함수 필요
+결과 : GROUP BY 때문에, `SALES*PRICE`는 그룹의 첫 행을 집계한 결과 출력\
+-> 집계함수 필요
 
 <br>
 
@@ -104,7 +105,7 @@ ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
 서브쿼리 테이블 : 2022년 1월 데이터를 필터링하고, 행 별로 `SALES X PRICE` 계산\
 기본 테이블 : GROUP BY 를 하고, `SUM(SALES X PRICE)` 집계\
-GROUP BY를 하면 `SALES X PRICE`가 행 별로 집계가 안될 것이라 생각하여, 서브쿼리에서 먼저 행 별로 집계해주고, GROUP BY를 한 기본 테이블에는 서브쿼리에서 집계한 변수를 이용하여 집계\
+GROUP BY를 하면 `SALES X PRICE`가 행 별로 집계가 안될 것이라 생각하여, 서브쿼리에서 먼저 행 별로 집계해주고, GROUP BY를 한 기본 테이블에는 서브쿼리에서 집계한 변수를 이용하여 집계
 
 <br>
 
