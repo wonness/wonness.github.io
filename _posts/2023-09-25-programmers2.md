@@ -36,7 +36,7 @@ FROM CART_PRODUCTS A JOIN CART_PRODUCTS B
 ON A.CART_ID = B.CART_ID
 WHERE A.NAME IN ("Milk", "Yogurt") AND B.NAME IN ("Milk", "Yogurt")
 ```
-<span style="font-size: 15px ;"> 결과 : 우유와 우유, 요거트와 요거트가 있는 행을 걸러내는 데 실패
+<span style="font-size: 14px ;"> 결과 : milk-milk, yogurt-yogurt 있는 행을 걸러내는 데 실패
 
 <br>
 
@@ -47,15 +47,13 @@ FROM CART_PRODUCTS A JOIN CART_PRODUCTS B
 ON A.CART_ID = B.CART_ID
 WHERE A.NAME = "Milk" AND B.NAME = "Yogurt"
 ```
-<span style="font-size: 15px ;"> 한 명이 우유와 요거트를 장바구니에 담아놨을 때 셀프조인을 하면, milk-yogurt, yogurt-milk ... 등등의 조합들이 출력
+<span style="font-size: 14px ;"> 우유와 요거트를 한 장바구니에 담아놨을 때 셀프조인을 하면, milk-yogurt, yogurt-milk 조합이 출력
 
-<span style="font-size: 10px ;"> 즉, 조합이 순서만 바뀐 채로 중복되어서 출력되기 때문에, milk-yogurt or yogurt-milk 중 하나의 조합을 조건으로 지정해주면 된다.
-
+<span style="font-size: 14px ;"> 즉, 조합이 순서만 바뀐 채로 중복되어서 출력되기 때문에, milk-yogurt or yogurt-milk 중 하나의 조합을 조건으로 지정
 <br>
 
 1. `FROM` : 자기 자신의 테이블을 조인시켜, 한 장바구니에 담아놓은 상품들의 조합을 불러온다. 
-2. `WHERE` : 장바구니에 우유와 요거트가 동시에 담긴 데이터를 필터링한다. 
-
+2. `WHERE` : 장바구니에 우유와 요거트가 동시에 담긴 (milk-yogurt 또는 yogurt-milk) 데이터를 필터링한다. 
 <br>
 
 💡 **새로 배운 것**\
@@ -89,9 +87,7 @@ WHERE DATE_FORMAT(SALES_DATE,"%Y-%m") = "2022-01"
 GROUP BY C.AUTHOR_ID, CATEGORY
 ORDER BY C.AUTHOR_ID, CATEGORY DESC
 ```
-<span style="font-size: 10px ;"> 결과 : GROUP BY를 해줘서, `SALES*PRICE`는 첫 행에서 계산된 것을 출력함
-
-<span style="font-size: 10px ;"> -> 집계함수 필요
+<span style="font-size: 14px ;"> 결과 : GROUP BY를 해주었기 때문에, `SALES*PRICE`는 그룹의 첫 행을 집계한 결과 출력 -> 집계함수 필요
 
 <br>
 
