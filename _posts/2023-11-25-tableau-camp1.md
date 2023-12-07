@@ -15,30 +15,37 @@ toc_sticky: true
 date: 2023-11-25
 last_modified_at: 2023-11-25
 ---
-> "스타벅스 메뉴 데이터"와 "매장 정보 데이터"를 이용한 시각화 & 대시보드 제작\
-> ☕ 다이어트 중인데.. 칼로리와 카페인이 적은 음료는 뭘까?
+## 1일차
+> 1일차 학습 안내\
+> 태블로 작동 원리 이해, 대시보드 제작
 
 <br>
 
-## 🏁 막대 차트
+### 🏁 막대 차트
 - 값을 길이로 표현
 - 수치 데이터 값들 간의 양적 차이를 비교하는데 유용
 - 참조선(ex. 평균값, 중간값)을 표현해 특정 값에 도달했는지 비교할 수 있음
 - 유의할 점) 비슷한 값들의 비교를 명확하게 하기 위해 데이터를 정렬해야 함
 
-## 🏁 트리 맵
+### 🏁 트리 맵
 - 계층 구조의 데이터를 표시하는데 적합한 시각화
 - 전체 대비 부분의 비율이 얼마나 되는지 비교하는데 많이 사용
 - 사각형의 크기와 색상에 따라 데이터의 패턴을 확인할 수 있고, 데이터를 한 번에 볼 수 있음
 
-## 🏁 산점도
+### 🏁 산점도
 - 2개의 연속형 데이터에 대한 상관관계 분석하는데 가장 많이 사용되는 시각화
 - 두 개의 축으로 데이터가 얼마나 퍼져있는지 분포를 살펴볼 수 있음
 - 상수 라인/ 평균 라인/ 사분위수 및 중앙값/ 추세선과 같은 참조 라인을 추가해서 값의 분포를 비교하기에 유용
 
 <br>
 
-# 1️⃣ 카테고리 별 평균 칼로리 & 평균 칼로리
+## 1일차 과제
+> "스타벅스 메뉴 데이터"와 "매장 정보 데이터"를 이용한 시각화 & 대시보드 제작\
+> ☕ 다이어트 중인데.. 칼로리와 카페인이 적은 음료는 뭘까?
+
+<br>
+
+### 1️⃣ 카테고리 별 평균 칼로리 & 평균 칼로리
 ![barchart](https://eseullee.github.io/assets/images/posts_img/tableau_bootcamp/day1/20230203_tableau_bootcamp_17_1_1.png)
 
 1. 행 선반 (Y축) : 카테고리 / 열 선반 (X축) : 칼로리, 카페인
@@ -58,7 +65,7 @@ last_modified_at: 2023-11-25
 
 <br>
 
-# 2️⃣ 메뉴명 별 칼로리 & 카페인
+### 2️⃣ 메뉴명 별 칼로리 & 카페인
 ![treemap](https://eseullee.github.io/assets/images/posts_img/tableau_bootcamp/day1/20230203_tableau_bootcamp_17_1_2.png)
 
 1. 마크 유형을 사각형으로 변경
@@ -75,16 +82,16 @@ last_modified_at: 2023-11-25
 
 <br>
 
-# 3️⃣ 카테고리와 메뉴명을 한 번에 살펴보기
+### 3️⃣ 카테고리와 메뉴명을 한 번에 살펴보기
 ![image](https://github.com/wonness/wonness.github.io/assets/141399098/9db8f998-d594-4c30-b22f-dd9db1665385)
 
 
-# 4️⃣ 당분 함유량과 칼로리 상관관계
+### 4️⃣ 당분 함유량과 칼로리 상관관계
 ![scatterplot](https://eseullee.github.io/assets/images/posts_img/tableau_bootcamp/day1/20230203_tableau_bootcamp_17_1_5.png)
 
-# 5️⃣ 시군구 별 매장 분포 현황
+### 5️⃣ 시군구 별 매장 분포 현황
 ![map](https://eseullee.github.io/assets/images/posts_img/tableau_bootcamp/day1/20230203_tableau_bootcamp_17_1_6.png)
 
-# 6️⃣ 대시보드 만들기
+## 6️⃣ 대시보드 만들기
 ![dashboard](https://eseullee.github.io/assets/images/posts_img/tableau_bootcamp/day1/20230203_tableau_bootcamp_17_1_7.png)
 
