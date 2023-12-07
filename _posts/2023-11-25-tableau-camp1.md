@@ -86,16 +86,35 @@ last_modified_at: 2023-11-25
 <br>
 
 ### 3️⃣ 카테고리와 메뉴명을 한 번에 살펴보기
+카테고리에 마우스 오버하면, 해당 카테고리에 해당되는 메뉴를 살펴보기\
+하나의 시트에서 다른 시트 함께 살펴보기
 ![image](https://github.com/wonness/wonness.github.io/assets/141399098/9db8f998-d594-4c30-b22f-dd9db1665385)
+
+1. 카테고리 별 평균 칼로리 & 카페인 시트 > 평균 칼로리 마크 > 도구 설명
+2. 삽입 클릭 > 시트 > 메뉴 별 칼로리 & 카페인 선택
 
 <br>
 
 ### 4️⃣ 당분 함유량과 칼로리 상관관계
+당분 함유량이 높을 수록 칼로리가 높을까?
 ![scatterplot](https://eseullee.github.io/assets/images/posts_img/tableau_bootcamp/day1/20230203_tableau_bootcamp_17_1_5.png)
+
+1. 행 선반 (Y축) : 칼로리 / 열 선반 (X축) : 당류 -> 둘 다 연속형 변수
+2. 메뉴명을 마크 선반의 세부 정보에 놓기
+    - 시각화의 집계 기준이 전체에서 메뉴명 수준으로 변경
+3. 마크 유형을 원으로 변경
+4. 카페인으로 마크(원)의 색상과 크기
+
+<br>
+
+💡 시각화 결과
+- 당류가 높을 수록 칼로리가 높은 것을 볼 수 있음
+- 비슷한 당류가 들어가도 칼로리가 메뉴에 따라 달라진 다는 것을 알 수 있음
 
 <br>
 
 ### 5️⃣ 시군구 별 매장 분포 현황
+어디 시군구에 스타벅스가 가장 많을까?
 ![map](https://eseullee.github.io/assets/images/posts_img/tableau_bootcamp/day1/20230203_tableau_bootcamp_17_1_6.png)
 
 <br>
