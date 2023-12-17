@@ -40,8 +40,7 @@ last_modified_at: 2023-12-17
 
 - 매개변수 활용
     - 목표 매출 조정
-        - 목표 매출 금액을 유동적으로 조정하고 달성 여부를 색상으로 구분하는 문제
-        - 매개변수 : 목표 매출 금액
+        - <span style="background-color:#f5f0ff">목표 매출 금액</span>(매개변수)을 유동적으로 조정하고 달성 여부를 색상으로 구분하는 문제
         - 매개변수 생성 시, 허용 가능한 값을 범위로 설정 ➡️ 계산된 필드 생성 `SUM([매출]) > [매개변수명]`
           <details>
           <summary>결과 📊</summary>
@@ -53,8 +52,7 @@ last_modified_at: 2023-12-17
           </details>
             
     - Top N
-        - 매출 상위 N개의 제품들만 출력하는 문제
-        - 매개변수 : 출력할 제품 수
+        - 매출 <span style="background-color:#f5f0ff">상위 N개의 제품들</span>(매개변수)만 출력하는 문제
         - 제품명에 필터 적용 ➡️ 상위 [매개변수명] 기준 매출 합계 적용
           <details>
           <summary>결과 📊</summary>
@@ -67,8 +65,7 @@ last_modified_at: 2023-12-17
           </details>
             
     - 측정값 변경
-        - 매개변수명에 따라 다른 측정값을 불러오는 문제
-        - 매개변수 : 측정값
+        - 매개변수명에 따라 다른 <span style="background-color:#f5f0ff">측정값</span>(매개변수)을 불러오는 문제
         - 매개변수 생성 시, 허용 가능한 값을 목록으로 설정 ➡️ 계산된 필드에서 IF문을 활용하여 [매개변수명]에 따라 불러올 측정값 설정
           <details>
           <summary>결과 📊</summary>
