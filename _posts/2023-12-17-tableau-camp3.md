@@ -83,8 +83,8 @@ last_modified_at: 2023-12-17
 ### ✏️ 대시보드 동작
 
 필터 또는 하이라이트를 추가하여 사용자와 상호작용할 수 있도록 시각화
+![image](https://github.com/wonness/wonness.github.io/assets/141399098/e88ba83a-33b5-4942-9126-d12482c00514){: width="70%" height="70%"}
 
-![image](https://github.com/wonness/wonness.github.io/assets/141399098/e88ba83a-33b5-4942-9126-d12482c00514)
 
 - [대시보드] > [동작]의 "필터" 기능 = 대시보드에 포함된 시트에서의 "필터로 사용" 기능
 : 해당 시트에 있는 값들이 다른 시트에 영향을 주어 필터링됨
