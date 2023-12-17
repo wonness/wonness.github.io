@@ -46,7 +46,7 @@ last_modified_at: 2023-12-17
           <summary>결과 📊</summary>
           <div markdown="1">
 
-          ![image](https://github.com/wonness/wonness.github.io/assets/141399098/ea6fe299-67e1-4f03-9020-433707b410bd)
+          ![image](https://github.com/wonness/wonness.github.io/assets/141399098/ea6fe299-67e1-4f03-9020-433707b410bd){: width="400" height="400"}
 
           </div>
           </details>
