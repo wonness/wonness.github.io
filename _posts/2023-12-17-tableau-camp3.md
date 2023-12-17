@@ -35,7 +35,7 @@ last_modified_at: 2023-12-17
     
     데이터 유형(실수, 정수, 문자열, 날짜 등)과 허용 가능한 값 설정 방법(전체, 목록, 범위) 선택
 
-    ![image](https://github.com/wonness/wonness.github.io/assets/141399098/1949ca35-456a-47a9-88c4-f9626fb37023)
+    ![image](https://github.com/wonness/wonness.github.io/assets/141399098/1949ca35-456a-47a9-88c4-f9626fb37023){: width="70%" height="70%"}
 
 
 - 매개변수 활용
@@ -46,7 +46,7 @@ last_modified_at: 2023-12-17
           <summary>결과 📊</summary>
           <div markdown="1">
 
-          ![image](https://github.com/wonness/wonness.github.io/assets/141399098/ea6fe299-67e1-4f03-9020-433707b410bd){: width="400" height="400"}
+          ![image](https://github.com/wonness/wonness.github.io/assets/141399098/ea6fe299-67e1-4f03-9020-433707b410bd)
 
           </div>
           </details>
