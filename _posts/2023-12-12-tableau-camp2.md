@@ -45,10 +45,10 @@ last_modified_at: 2023-12-12
 ![image](https://github.com/wonness/wonness.github.io/assets/141399098/3e4a4d40-7b05-4fa8-a06d-f1345bad0811)
 
 - 수익률 - 행 수준
-    - [수익] / [매출]
+    - `[수익] / [매출]`
     - 각각의 행에 대해 수익률 계산 후, 그 값들을 합계 집계
 - 수익률 - 집계 수준
-    - SUM([수익]) / SUM([매출])
+    - `SUM([수익]) / SUM([매출])`
     - 수익과 매출을 먼저 합계 집계한 후, 수익률 계산
 
 <br>
