@@ -31,7 +31,7 @@ last_modified_at: 2023-12-17
     → 계산식을 수정할 필요 없이 매개변수 활용 !
 
   
-- 매개변수는 just 변수일 뿐 계산, 필터 및 참조선을 적용해야 제 기능을 함
+- 매개변수는 just 변수일 뿐 <span style="text-decoration: underline;">계산, 필터 및 참조선을 적용해야 제 기능을 함</span>
     
 
 - **매개변수 생성**
